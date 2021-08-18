@@ -3,7 +3,10 @@
     <head>
         <title>Internship</title>
         <link rel="stylesheet" href="{{styleUrl('main.css')}}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         @yield('additional-css')
+        @section('additional-css')
+        @endsection
     </head>
     <body>
     @include('layout.header')

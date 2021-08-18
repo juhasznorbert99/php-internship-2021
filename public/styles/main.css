@@ -1,4 +1,26 @@
 .test {
-    background-color: #777;
     text-align: center;
+}
+#product-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    color: #183a1d;
+}
+
+#product-table td, #product-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#product-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#product-table tr:hover {background-color: #ddd;}
+
+#product-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #e1eedd;
+    color: #183a1d;
 }
