@@ -39,7 +39,9 @@ class TestController extends BaseController
 //        $this->jsonResponse($data);
 //        $this->response($data, 'products/list');
     }
-    public function form(){
+    public function cart(){
+        $data = [];
 
+        $this->bladeResponse($data, 'products/cart');
     }
 }

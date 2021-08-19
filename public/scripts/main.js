@@ -18,3 +18,7 @@ $(".add-cart-button").click(function(event){
         }
    });
 });
+
+$("#cart-page").click(function (){
+    location.href = 'http://norbi.local/test-controller/cart';
+});

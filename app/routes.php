@@ -11,4 +11,6 @@ $router->get('/test', function($request){
 
 $router->get('/test-controller', 'TestController@test');
 
+$router->get('/test-controller/cart', 'TestController@cart');
+
 return $router;
