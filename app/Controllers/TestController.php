@@ -17,8 +17,9 @@ class TestController extends BaseController
             });
         }
         session_start();
-        foreach($_SESSION['sort'] as $key => $value)
-            sortTable($new_data,$_SESSION['sort'][$key],$key);
+        if(isset($_SESSION['sort']))
+            foreach($_SESSION['sort'] as $key => $value)
+                sortTable($new_data,$_SESSION['sort'][$key],$key);
 
         $data['products'] = $new_data;
     }
@@ -37,5 +38,8 @@ class TestController extends BaseController
         $this->bladeResponse($data, 'products/list');
 //        $this->jsonResponse($data);
 //        $this->response($data, 'products/list');
+    }
+    public function form(){
+
     }
 }
