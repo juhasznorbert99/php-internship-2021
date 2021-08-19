@@ -3,15 +3,40 @@
 @section('content')
     <div>
         <div class="container">
-            <div class="row justify-content-around">
+            <div class="row">
                 @foreach($items as $key => $value)
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$value}}</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-outline-secondary">-</a>
-                            <a href="#" class="btn btn-outline-secondary">+</a>
-                            <p id="card-id-{{$key+1}}">Total: 1</p>
+                    <div class="col-3 card-distance" style="width: 18rem;">
+                        <div class="card-body card">
+                            <h5 class="card-title">
+                                <?php
+                                    $products_path = basePath().'\data\products.php';
+                                    $new_data = include($products_path);
+                                    echo($new_data[$key]['name']);
+                                ?>
+                            </h5>
+                            <p class="card-text">
+
+                                <?php
+                                $products_path = basePath().'\data\products.php';
+                                $new_data = include($products_path);
+                                echo($new_data[$key]['description']);
+                                ?>
+                            </p>
+                            <div class="row options">
+
+                                <div class="col-3">
+                                    <a href="#" class="btn btn-outline-secondary">-</a>
+                                </div>
+
+                                <div class="col-3">
+                                    <a href="#" class="btn btn-outline-secondary">+</a>
+                                </div>
+
+                                <div class="col-3">
+                                    <a href="#" class="btn btn-outline-secondary">Delete</a>
+                                </div>
+                            </div>
+                            <p id="card-id-{{$key+1}}" class="total">Total: 1</p>
                         </div>
                     </div>
                 @endforeach
