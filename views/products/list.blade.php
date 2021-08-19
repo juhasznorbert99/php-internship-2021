@@ -31,11 +31,14 @@
                         @endif
                     @endforeach
                     <td>
-                        <a href="{{'\add-product.php?id='.$product['id']}}"><button type="submit" class="btn btn-outline-secondary" id="{{$product['id']}}">Add Cart</button></a>
+                        <button type="submit" class="btn btn-outline-secondary add-cart-button" id="{{$product['id']}}">Add Cart</button>
                     </td>
                 </tr>
             @endforeach
         </table>
+        <div class="container">
+            <button type="button" class="btn btn-outline-secondary" id="cart-page">Cart Page</button>
+        </div>
         <?php
             //session_start();
             //unset($_SESSION['cart']);
@@ -53,6 +56,16 @@
             if(isset($_COOKIE["last-loaded"]))
                 echo($_COOKIE["last-loaded"]);
         ?>
+
+        <form action="upload-form.php" method="post" enctype="multipart/form-data" id="form">
+            <div class="form-group">
+                <label for="exampleFormControlFile1">Example file input</label>
+                <input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload">
+
+                <br>
+                <input type="submit" value="Upload Image" name="submit">
+            </div>
+        </form>
     </div>
 </div>
 @endsection

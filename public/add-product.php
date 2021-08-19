@@ -17,5 +17,5 @@ if(!in_array($id,$cart_array))
 $_SESSION['cart'] = $cart_array;
 //this is used to redirect the page back to index.php after adding product to cart
 header('Location: '.$config['url'].'test-controller');
-
+//echo json_encode($_SESSION['cart']);
 die();
