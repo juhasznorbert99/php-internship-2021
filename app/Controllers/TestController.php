@@ -40,7 +40,16 @@ class TestController extends BaseController
 //        $this->response($data, 'products/list');
     }
     public function cart(){
-        $data = [];
+        $data = [
+            'items' => []
+        ];
+        session_start();
+        if(isset($_SESSION['cart'])){
+            foreach ($_SESSION['cart'] as $key => $value){
+                $data['items'][$key] = $value;
+            }
+        }
+        //var_dump($data);
 
         $this->bladeResponse($data, 'products/cart');
     }
