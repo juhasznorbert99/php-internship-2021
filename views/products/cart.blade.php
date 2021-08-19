@@ -3,7 +3,7 @@
 @section('content')
     <div>
         <?php
-            //var_dump($_SESSION['cart']);
+//            var_dump($_SESSION['cart']);
         ?>
         <div class="container">
             <div class="row">
@@ -12,17 +12,26 @@
                         <div class="card-body card">
                             <h5 class="card-title">
                                 <?php
+                                    //var_dump($items);
                                     $products_path = basePath().'\data\products.php';
                                     $new_data = include($products_path);
-                                    echo($new_data[$value-1]['name']);
+                                    foreach ($new_data as $v){
+                                        if($v['id']==$value){
+                                            echo($v['name']);
+                                        }
+                                    }
                                 ?>
                             </h5>
                             <p class="card-text">
 
                                 <?php
-                                $products_path = basePath().'\data\products.php';
-                                $new_data = include($products_path);
-                                echo($new_data[$value-1]['description']);
+                                    $products_path = basePath().'\data\products.php';
+                                    $new_data = include($products_path);
+                                    foreach ($new_data as $v){
+                                        if($v['id']==$value){
+                                            echo($v['description']);
+                                        }
+                                    }
                                 ?>
                             </p>
                             <div class="row options">
@@ -44,6 +53,33 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+        <div class="container">
+            <form>
+                <div class="form-group row">
+                    <label for="inputLastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button class="btn btn-primary" id="buy">Buy</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 @endsection

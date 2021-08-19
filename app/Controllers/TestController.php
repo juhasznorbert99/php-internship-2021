@@ -43,13 +43,15 @@ class TestController extends BaseController
         $data = [
             'items' => []
         ];
+
+        $products_path = basePath().'\data\products.php';
+        $new_data = include($products_path);
         session_start();
         if(isset($_SESSION['cart'])){
             foreach ($_SESSION['cart'] as $key => $value){
                 $data['items'][$key] = $value;
             }
         }
-        //var_dump($data);
 
         $this->bladeResponse($data, 'products/cart');
     }

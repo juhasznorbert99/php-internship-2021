@@ -43,3 +43,16 @@ $(".delete").click(function (event){
     const increase = event.target.id.split("-");
     $("#card-id-"+increase[1]).text("Total items: 0");
 });
+
+$("#buy").click(function (){
+    $.ajax({
+        url: "add-product.php",
+        type: "GET",
+        data: {"id":event.target.id},
+        datatype: "json",
+        success: function(data){
+            //console.log(JSON.parse(data));
+            location.reload();
+        }
+    });
+});
