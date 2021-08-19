@@ -24,15 +24,15 @@
                             </p>
                             <div class="row options">
 
-                                <div class="col-3">
+                                <div class="col-3" id="decrease-{{$key+1}}">
                                     <a href="#" class="btn btn-outline-secondary">-</a>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-3" id="increase-{{$key+1}}">
                                     <a href="#" class="btn btn-outline-secondary">+</a>
                                 </div>
 
-                                <div class="col-3">
+                                <div class="col-3" id="delete-{{$key+1}}">
                                     <a href="#" class="btn btn-outline-secondary">Delete</a>
                                 </div>
                             </div>

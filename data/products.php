@@ -10,7 +10,7 @@ return [
     ],
     [
         'id' => 2,
-        'name' => 'item 1',
+        'name' => 'item 2',
         'units' => 200,
         'price' => 5,
         'description' => 'Just a cheap product with large stockJust a cheap product with large stockJust a cheap product with large stockJust a cheap product with large stock'
