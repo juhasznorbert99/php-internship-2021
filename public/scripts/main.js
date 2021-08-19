@@ -45,13 +45,26 @@ $(".delete").click(function (event){
 });
 
 $("#buy").click(function (){
+    //send data like: item id and quantity
+    let indexes = [];
+    let quantities = [];
+    let aux = $(".total");
+    for(let i = 0; i< aux.length;i++){
+        let text = aux[i].innerText;
+        let index = aux[i].id;
+        quantities.push(text.split(": ")[1]);
+        indexes.push(index.split("-")[2]);
+    }
     $.ajax({
-        url: "add-product.php",
+        url: "submit-cart.php",
         type: "GET",
-        data: {"id":event.target.id},
+        data: {
+            "id": indexes,
+            "quantity": quantities
+        },
         datatype: "json",
         success: function(data){
-            //console.log(JSON.parse(data));
+            console.log("grehgrehg");
             location.reload();
         }
     });
