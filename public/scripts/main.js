@@ -22,3 +22,24 @@ $(".add-cart-button").click(function(event){
 $("#cart-page").click(function (){
     location.href = 'http://norbi.local/test-controller/cart';
 });
+
+$(".increase").click(function (event){
+    const increase = event.target.id.split("-");
+    let text = $("#card-id-"+increase[1]).text();
+    let split_text = text.split(": ");
+    let nr = parseInt(split_text[1], 10)+1;
+    $("#card-id-"+increase[1]).text(split_text[0] + ": "+nr);
+});
+$(".decrease").click(function (event){
+    const increase = event.target.id.split("-");
+    let text = $("#card-id-"+increase[1]).text();
+    let split_text = text.split(": ");
+    let nr = parseInt(split_text[1], 10)-1;
+    if(nr<=0)
+        nr=0;
+    $("#card-id-"+increase[1]).text(split_text[0] + ": "+nr);
+});
+$(".delete").click(function (event){
+    const increase = event.target.id.split("-");
+    $("#card-id-"+increase[1]).text("Total items: 0");
+});

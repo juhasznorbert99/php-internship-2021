@@ -2,6 +2,9 @@
 
 @section('content')
     <div>
+        <?php
+            //var_dump($_SESSION['cart']);
+        ?>
         <div class="container">
             <div class="row">
                 @foreach($items as $key => $value)
@@ -11,7 +14,7 @@
                                 <?php
                                     $products_path = basePath().'\data\products.php';
                                     $new_data = include($products_path);
-                                    echo($new_data[$key]['name']);
+                                    echo($new_data[$value-1]['name']);
                                 ?>
                             </h5>
                             <p class="card-text">
@@ -19,24 +22,24 @@
                                 <?php
                                 $products_path = basePath().'\data\products.php';
                                 $new_data = include($products_path);
-                                echo($new_data[$key]['description']);
+                                echo($new_data[$value-1]['description']);
                                 ?>
                             </p>
                             <div class="row options">
-
-                                <div class="col-3" id="decrease-{{$key+1}}">
-                                    <a href="#" class="btn btn-outline-secondary">-</a>
+                                <!-- acel value e valoarea, ca si index ii value-1-->
+                                <div class="col-3 decrease">
+                                    <a href="#" class="btn btn-outline-secondary" id="decrease-{{$value}}">-</a>
                                 </div>
 
-                                <div class="col-3" id="increase-{{$key+1}}">
-                                    <a href="#" class="btn btn-outline-secondary">+</a>
+                                <div class="col-3 increase">
+                                    <a href="#" class="btn btn-outline-secondary" id="increase-{{$value}}">+</a>
                                 </div>
 
-                                <div class="col-3" id="delete-{{$key+1}}">
-                                    <a href="#" class="btn btn-outline-secondary">Delete</a>
+                                <div class="col-3 delete">
+                                    <a href="#" class="btn btn-outline-secondary" id="delete-{{$value}}">Delete</a>
                                 </div>
                             </div>
-                            <p id="card-id-{{$key+1}}" class="total">Total: 1</p>
+                            <p id="card-id-{{$value}}" class="total">Total items: 1</p>
                         </div>
                     </div>
                 @endforeach
