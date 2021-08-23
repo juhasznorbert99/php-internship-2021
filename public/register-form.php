@@ -1,5 +1,6 @@
 <?php
     $config = require_once '../config.php';
+    require_once '../vendor/autoload.php';
     $database = require_once '../database-config.php';
 
     if(!isset($_SESSION))
@@ -69,9 +70,24 @@
             $nr = 32;
             $token = substr(str_shuffle($data), 0, $nr);
             $confirmed = 0;
-            $stm->bind_param("ssssssis",$lastname,$firstname,$address,$email,$phone,md5($password),$confirmed,$token);
+            $password =  md5($password);
+            $stm->bind_param("ssssssis",$lastname,$firstname,$address,$email,$phone,$password,$confirmed,$token);
             $stm->execute();
+            $stm->close();
             $_SESSION['register-display-error'] = "";
+
+            //send email with his token
+            $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+                ->setUsername('norbertjuhasz99')
+                ->setPassword('darksoul00');
+            $mailer = new Swift_Mailer($transport);
+// Create a message
+            $message = (new Swift_Message('First email'))
+                ->setFrom(['norbertjuhasz99@gmail.com' => 'Andrei Sender'])
+                ->setTo([$email => 'This has a name'])
+                ->setBody('Confirm email at: http://norbi.local/test-controller/confirm?token='.$token);
+// Send the message
+            $result = $mailer->send($message);
             header('Location: '.$config['url'].'test-controller');
         }else{
             $_SESSION['register-display-error'] = "Email already used";

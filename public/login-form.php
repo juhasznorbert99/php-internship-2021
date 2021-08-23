@@ -25,7 +25,7 @@
         $_SESSION["login-password"] = "*Password required";
         $check=0;
     }
-
+    $confirmed = 1;
     $conn = mysqli_connect('localhost', $database['database'][0], $database['database'][1],
         $database['database'][2]);
     // Check connection
@@ -33,22 +33,32 @@
         die("Connection failed: " . mysqli_connect_error());
     }
     $okay = 0;
-    $sql = "SELECT Email, MD5Password from `user`;";
+    $sql = "SELECT Email, MD5Password, Confirmed from `user`;";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         while($row = mysqli_fetch_assoc($result)) {
             echo $row['MD5Password'];
             echo "</br>";
-            if($row['Email']==$email && md5($password) == $row['MD5Password'])
+            if($row['Email']==$email && md5($password) == $row['MD5Password']){
                 $okay=1;
+                if($row['Confirmed']==0)
+                    $confirmed=0;
+            }
         }
     }
 
     if($check){
         if($okay){
-            $_SESSION['display-error'] = "";
-            $_SESSION['email'] = $email;
-            header('Location: '.$config['url'].'test-controller');
+            if($confirmed){
+
+                $_SESSION['display-error'] = "";
+                $_SESSION['email'] = $email;
+                header('Location: '.$config['url'].'test-controller');
+            }else{
+
+                $_SESSION['display-error'] = "Email not confirmed";
+                header('Location: '.$config['url'].'test-controller/login');
+            }
         }
         else{
             $_SESSION['display-error'] = "Password or Email incorrect";

@@ -19,4 +19,6 @@ $router->get('/test-controller/login', 'TestController@login');
 
 $router->get('/test-controller/register', 'TestController@register');
 
+$router->get('/test-controller/confirm', 'TestController@confirm');
+
 return $router;

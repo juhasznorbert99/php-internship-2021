@@ -70,4 +70,9 @@ class TestController extends BaseController
 
         $this->bladeResponse($data, 'products/register');
     }
+    public function confirm(){
+        $token = $_GET['token'];
+        $data = ['token'=>$token];
+        $this->bladeResponse($data, 'products/confirm');
+    }
 }
