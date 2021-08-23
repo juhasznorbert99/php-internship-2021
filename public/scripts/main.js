@@ -44,6 +44,11 @@ $(".delete").click(function (event){
     $("#card-id-"+increase[1]).text("Total items: 0");
 });
 
+function isEmail(email) {
+    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    return regex.test(email);
+}
+
 $("#buy").click(function (){
     //send data like: item id and quantity
     let indexes = [];
@@ -55,17 +60,31 @@ $("#buy").click(function (){
         quantities.push(text.split(": ")[1]);
         indexes.push(index.split("-")[2]);
     }
+    console.log(indexes);
+    console.log(quantities);
+
     $.ajax({
-        url: "submit-cart.php",
-        type: "GET",
+        url: "/submit-cart.php",
+        type: "POST",
         data: {
-            "id": indexes,
-            "quantity": quantities
+             "id": indexes,
+             "quantity": quantities
         },
         datatype: "json",
         success: function(data){
-            console.log("grehgrehg");
-            location.reload();
+            //location.reload();
+            window.location.replace("http://norbi.local/test-controller");
         }
     });
+});
+
+
+$("#select-users-created").click(function (){
+    location.href = 'http://norbi.local/test-controller/users';
+});
+$("#select-login").click(function (){
+    location.href = 'http://norbi.local/test-controller/login';
+});
+$("#select-register").click(function (){
+    location.href = 'http://norbi.local/test-controller/register';
 });

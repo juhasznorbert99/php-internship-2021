@@ -2,7 +2,16 @@
 
 @section('content')
 <div>
-    <div>UserName: {{$username}}</div>
+    <div>UserName: <?php
+            $aux = "";
+            if(!isset($_SESSION))
+                session_start();
+            if(isset($_SESSION['email']))
+                $aux=$_SESSION['email'];
+            else
+                $aux = $username;
+            echo $aux;
+        ?></div>
     <div>First Name: {{$firstName}}</div>
     <div>Last Name: {{$lastName}}</div>
 
@@ -43,29 +52,42 @@
             //session_start();
             //unset($_SESSION['cart']);
             //unset($_SESSION['sort']);
-            echo("<pre>");
+            //echo("<pre>");
             if(isset($_SESSION['cart']))
-                var_dump($_SESSION['cart']);
+                //var_dump($_SESSION['cart']);
             echo("</br>");
             if(isset($_SESSION['sort']))
-                var_dump($_SESSION['sort']);
-            echo("</pre>");
+                //var_dump($_SESSION['sort']);
+            //echo("</pre>");
         ?>
         <?php
 
             if(isset($_COOKIE["last-loaded"]))
-                echo($_COOKIE["last-loaded"]);
+                //echo($_COOKIE["last-loaded"]);
         ?>
 
         <form action="upload-form.php" method="post" enctype="multipart/form-data" id="form">
             <div class="form-group">
                 <label for="exampleFormControlFile1">Example file input</label>
                 <input type="file" class="form-control-file" id="fileToUpload" name="fileToUpload">
-
                 <br>
                 <input type="submit" value="Upload Image" name="submit">
             </div>
         </form>
+        <?php
+            if(isset($_SESSION['sum'])){
+
+                $string = "<p>Total: '".$_SESSION['sum']."' Ron</p>";
+                if($_SESSION['sum']!=0){
+                    echo($string);
+                }
+            }
+        ?>
+    </div>
+    <div>
+        <button class="btn btn-outline-secondary" id="select-users-created">Users</button>
+        <button class="btn btn-outline-secondary" id="select-login">Login</button>
+        <button class="btn btn-outline-secondary" id="select-register">Register</button>
     </div>
 </div>
 @endsection

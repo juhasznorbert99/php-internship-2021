@@ -1,23 +1,25 @@
 .test {
     text-align: center;
 }
-#product-table {
+#product-table, #user-table {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
     color: #183a1d;
 }
 
-#product-table td, #product-table th {
+#product-table td, #product-table th,#user-table td, #user-table th    {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
 #product-table tr:nth-child(even){background-color: #f2f2f2;}
+#user-table tr:nth-child(even){background-color: #f2f2f2;}
 
 #product-table tr:hover {background-color: #ddd;}
+#user-table tr:hover {background-color: #ddd;}
 
-#product-table th {
+#product-table th,#user-table th  {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -60,4 +62,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
+}
+.error{
+    color: #FF0000;
 }

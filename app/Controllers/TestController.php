@@ -55,4 +55,19 @@ class TestController extends BaseController
 
         $this->bladeResponse($data, 'products/cart');
     }
+    public function users(){
+        $data = [];
+
+        $this->bladeResponse($data, 'products/users');
+    }
+    public function login(){
+        $data = [];
+
+        $this->bladeResponse($data, 'products/login');
+    }
+    public function register(){
+        $data = [];
+
+        $this->bladeResponse($data, 'products/register');
+    }
 }

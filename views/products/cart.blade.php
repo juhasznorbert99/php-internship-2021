@@ -37,15 +37,15 @@
                             <div class="row options">
                                 <!-- acel value e valoarea, ca si index ii value-1-->
                                 <div class="col-3 decrease">
-                                    <a href="#" class="btn btn-outline-secondary" id="decrease-{{$value}}">-</a>
+                                    <a class="btn btn-outline-secondary" id="decrease-{{$value}}">-</a>
                                 </div>
 
                                 <div class="col-3 increase">
-                                    <a href="#" class="btn btn-outline-secondary" id="increase-{{$value}}">+</a>
+                                    <a class="btn btn-outline-secondary" id="increase-{{$value}}">+</a>
                                 </div>
 
                                 <div class="col-3 delete">
-                                    <a href="#" class="btn btn-outline-secondary" id="delete-{{$value}}">Delete</a>
+                                    <a class="btn btn-outline-secondary" id="delete-{{$value}}">Delete</a>
                                 </div>
                             </div>
                             <p id="card-id-{{$value}}" class="total">Total items: 1</p>
@@ -74,12 +74,8 @@
                         <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <button class="btn btn-primary" id="buy">Buy</button>
-                    </div>
-                </div>
             </form>
+            <button class="btn btn-outline-secondary" id="buy">Submit</button>
         </div>
     </div>
 @endsection
