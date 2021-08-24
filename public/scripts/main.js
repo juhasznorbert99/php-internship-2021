@@ -60,22 +60,27 @@ $("#buy").click(function (){
         quantities.push(text.split(": ")[1]);
         indexes.push(index.split("-")[2]);
     }
-    console.log(indexes);
-    console.log(quantities);
 
-    $.ajax({
-        url: "/submit-cart.php",
-        type: "POST",
-        data: {
-             "id": indexes,
-             "quantity": quantities
-        },
-        datatype: "json",
-        success: function(data){
-            //location.reload();
-            window.location.replace("http://norbi.local/test-controller");
-        }
-    });
+    let email = $("#buyer-email").val();
+
+    // console.log(indexes);
+    // console.log(quantities);
+    // console.log(email);
+    if(isEmail(email)){
+        $.ajax({
+            url: "/submit-cart.php",
+            type: "POST",
+            data: {
+                "id": indexes,
+                "quantity": quantities
+            },
+            datatype: "json",
+            success: function(data){
+                //location.reload();
+                window.location.replace("http://norbi.local/test-controller");
+            }
+        });
+    }
 });
 
 
