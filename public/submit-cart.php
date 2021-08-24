@@ -1,7 +1,9 @@
 <?php
 
+    require_once '../vendor/autoload.php';
     $config = require_once '../database-config.php';
     $conn = mysqli_connect('localhost', $config['database'][0], $config['database'][1], $config['database'][2]);
+    var_dump($config);
     function getProductsFromDB(){
 
         global $conn;
@@ -78,6 +80,7 @@
         }
         return $prices;
     }
+
     function insertIntoOrderItems($index,$prices,$quantity,$id){
         global $conn;
         // Check connection
@@ -93,6 +96,24 @@
             $stm->bind_param("iiid",$orderID,$orderProductID,$orderUnits,$orderPrices);
             $stm->execute();
             $stm->close();
+        }
+    }
+    function sendEmail(){
+        $email = $_POST['email'];
+        $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+            ->setUsername('norbertjuhasz99')
+            ->setPassword('darksoul00');
+        $mailer = new Swift_Mailer($transport);
+        $message = (new Swift_Message('First email'))
+            ->setFrom(['norbertjuhasz99@gmail.com' => 'LIDL'])
+            ->setTo([$email => 'This has a name'])
+            ->setBody('GG');
+        try{
+
+            $result = $mailer->send($message);
+            //var_dump($result);
+        }catch (Exception $er){
+            var_dump($er);
         }
     }
     $config = require_once '../config.php';
@@ -118,8 +139,10 @@
         $id = lastOrderID();
         $prices = findPricesByID($index);
         insertIntoOrderItems($index,$prices,$quantity,$id);
-
         mysqli_close($conn);
+
+        //send email
+        sendEmail();
 
         if(!isset($_SESSION))
             session_start();

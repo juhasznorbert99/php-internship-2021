@@ -49,7 +49,7 @@ function isEmail(email) {
     return regex.test(email);
 }
 
-$("#buy").click(function (){
+$("#buy").click(function (event){
     //send data like: item id and quantity
     let indexes = [];
     let quantities = [];
@@ -60,7 +60,8 @@ $("#buy").click(function (){
         quantities.push(text.split(": ")[1]);
         indexes.push(index.split("-")[2]);
     }
-
+    event.preventDefault();
+    event.stopPropagation();
     let email = $("#buyer-email").val();
 
     // console.log(indexes);
@@ -72,15 +73,18 @@ $("#buy").click(function (){
             type: "POST",
             data: {
                 "id": indexes,
-                "quantity": quantities
+                "quantity": quantities,
+                "email": email
             },
             datatype: "json",
             success: function(data){
+                //return false;
                 //location.reload();
                 window.location.replace("http://norbi.local/test-controller");
             }
         });
     }
+    return false;
 });
 
 
