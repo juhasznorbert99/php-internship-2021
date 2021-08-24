@@ -12,25 +12,18 @@
                         <div class="card-body card">
                             <h5 class="card-title">
                                 <?php
-                                    //var_dump($items);
-                                    $products_path = basePath().'\data\products.php';
-                                    $new_data = include($products_path);
-                                    foreach ($new_data as $v){
-                                        if($v['id']==$value){
-                                            echo($v['name']);
-                                        }
+                                    foreach ($products as $pk => $pv){
+                                        if($pv['id']==$value)
+                                            echo $pv['name'];
                                     }
                                 ?>
                             </h5>
                             <p class="card-text">
 
                                 <?php
-                                    $products_path = basePath().'\data\products.php';
-                                    $new_data = include($products_path);
-                                    foreach ($new_data as $v){
-                                        if($v['id']==$value){
-                                            echo($v['description']);
-                                        }
+                                    foreach ($products as $pk => $pv){
+                                        if($pv['id']==$value)
+                                            echo $pv['description'];
                                     }
                                 ?>
                             </p>

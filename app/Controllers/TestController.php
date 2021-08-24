@@ -5,9 +5,39 @@ namespace App\Controllers;
 class TestController extends BaseController
 {
 
+    public function getProductsFromDB(){
+        $config = require_once '../database-config.php';
+        $conn = mysqli_connect('localhost', $config['database'][0], $config['database'][1],
+            $config['database'][2]);
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM `products`";
+        $result =  mysqli_query($conn,$sql);
+        $data = [];
+        if (mysqli_num_rows($result) > 0) {
+            $counter=0;
+            while($row = mysqli_fetch_assoc($result)) {
+                $items = [];
+                $items['id'] = $row['id'];
+                $items['name'] = $row['name'];
+                $items['units'] = $row['units'];
+                $items['price'] = $row['price'];
+                $items['description'] = $row['description'];
+                $data[$counter] = $items;
+                $counter++;
+            }
+        }
+        return $data;
+    }
+
     public function sortProducts(&$data){
         $products_path = basePath().'\data\products.php';
         $new_data = include($products_path);
+
+        $auxData = $this->getProductsFromDB();
+
         function sortTable(&$array, $type, $field){
             usort($array, function ($a,$b) use ($type, $field){
                 if($type=="asc")
@@ -19,9 +49,9 @@ class TestController extends BaseController
         session_start();
         if(isset($_SESSION['sort']))
             foreach($_SESSION['sort'] as $key => $value)
-                sortTable($new_data,$_SESSION['sort'][$key],$key);
+                sortTable($auxData,$_SESSION['sort'][$key],$key);
 
-        $data['products'] = $new_data;
+        $data['products'] = $auxData;
     }
     public function test()
     {
@@ -41,11 +71,12 @@ class TestController extends BaseController
     }
     public function cart(){
         $data = [
-            'items' => []
+            'items' => [],
+            'products' => []
         ];
 
-        $products_path = basePath().'\data\products.php';
-        $new_data = include($products_path);
+        $dbProducts = $this->getProductsFromDB();
+        $data['products'] = $dbProducts;
         session_start();
         if(isset($_SESSION['cart'])){
             foreach ($_SESSION['cart'] as $key => $value){
