@@ -1,9 +1,14 @@
 <?php
+use App\Cart\Cart;
 
+    //require '../app/Cart/Cart.php';
     require_once '../vendor/autoload.php';
     $config = require_once '../database-config.php';
     $conn = mysqli_connect('localhost', $config['database'][0], $config['database'][1], $config['database'][2]);
-    var_dump($config);
+
+
+    //$cart = new Cart();
+
     function getProductsFromDB(){
 
         global $conn;
@@ -61,10 +66,8 @@
     }
     function findPricesByID($ids){
         $prices = [];
-        $counter=0;
         foreach ($ids as $id){
             global $conn;
-            // Check connection
             if (!$conn) {
                 die("Connection failed: " . mysqli_connect_error());
             }
@@ -82,7 +85,6 @@
     }
     function checkProductsQuantity($index, $quantity){
         global $conn;
-        // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -115,14 +117,12 @@
         try{
 
             $result = $mailer->send($message);
-            //var_dump($result);
         }catch (Exception $er){
             var_dump($er);
         }
     }
     function insertIntoOrderItems($index,$prices,$quantity,$id){
         global $conn;
-        // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -143,16 +143,12 @@
             sendEmail("Fail");
         }
     }
-    $config = require_once '../config.php';
-    //session_start();
+
     if(isset($_POST['id']) && isset($_POST['quantity'])){
         $index = $_POST['id']; // id-ul produsului i
         $quantity = $_POST["quantity"]; //cantitatea din produsul i
         $dbProducts = getProductsFromDB();
-        //var_dump($products);
         $sum = 0;
-        //find the price for each product and add this to a sum multiplied by the quantity numbers
-
         foreach($index as $key => $value){
             foreach($dbProducts as $products_value){
                 if($value == $products_value['id']){
