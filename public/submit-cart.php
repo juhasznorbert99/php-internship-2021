@@ -80,25 +80,29 @@
         }
         return $prices;
     }
-
-    function insertIntoOrderItems($index,$prices,$quantity,$id){
+    function checkProductsQuantity($index, $quantity){
         global $conn;
         // Check connection
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
-        for($i=0;$i<count($index);$i++){
-            $stm = $conn->prepare("INSERT INTO `order_items` (order_id, product_id, units, price) VALUES (?, ?, ?, ?);");
-            $orderID = $id;
-            $orderProductID = $index[$i];
-            $orderUnits = $quantity[$i];
-            $orderPrices = $prices[$i];
-            $stm->bind_param("iiid",$orderID,$orderProductID,$orderUnits,$orderPrices);
-            $stm->execute();
-            $stm->close();
+        $sql = "SELECT * FROM `products`";
+        $result =  mysqli_query($conn,$sql);
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                $counter=0;
+                foreach ($index as $i){
+                    if($row['id']==$i){
+                        if($row['units']<$quantity[$counter])
+                            return 0;
+                    }
+                    $counter++;
+                }
+            }
         }
+        return 1;
     }
-    function sendEmail(){
+    function sendEmail($string){
         $email = $_POST['email'];
         $transport = (new Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
             ->setUsername('norbertjuhasz99')
@@ -107,13 +111,36 @@
         $message = (new Swift_Message('First email'))
             ->setFrom(['norbertjuhasz99@gmail.com' => 'LIDL'])
             ->setTo([$email => 'This has a name'])
-            ->setBody('GG');
+            ->setBody($string);
         try{
 
             $result = $mailer->send($message);
             //var_dump($result);
         }catch (Exception $er){
             var_dump($er);
+        }
+    }
+    function insertIntoOrderItems($index,$prices,$quantity,$id){
+        global $conn;
+        // Check connection
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        if(checkProductsQuantity($index,$quantity)){
+            for($i=0;$i<count($index);$i++){
+                $stm = $conn->prepare("INSERT INTO `order_items` (order_id, product_id, units, price) VALUES (?, ?, ?, ?);");
+                $orderID = $id;
+                $orderProductID = $index[$i];
+                $orderUnits = $quantity[$i];
+                $orderPrices = $prices[$i];
+                $stm->bind_param("iiid",$orderID,$orderProductID,$orderUnits,$orderPrices);
+                $stm->execute();
+                $stm->close();
+            }
+            sendEmail("Success");
+            //update database
+        }else{
+            sendEmail("Fail");
         }
     }
     $config = require_once '../config.php';
@@ -141,8 +168,6 @@
         insertIntoOrderItems($index,$prices,$quantity,$id);
         mysqli_close($conn);
 
-        //send email
-        sendEmail();
 
         if(!isset($_SESSION))
             session_start();
