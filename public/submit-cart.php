@@ -1,14 +1,18 @@
 <?php
-use App\Cart\Cart;
 
-    //require '../app/Cart/Cart.php';
     require_once '../vendor/autoload.php';
     $config = require_once '../database-config.php';
     $conn = mysqli_connect('localhost', $config['database'][0], $config['database'][1], $config['database'][2]);
 
 
-    //$cart = new Cart();
-
+    //require '../app/Cart/Cart.php';
+    use App\Cart\Cart;
+    try{
+    $cart = new Cart();
+    }
+    catch(Exception $exception){
+        var_dump($exception);
+    }
     function getProductsFromDB(){
 
         global $conn;
@@ -147,7 +151,7 @@ use App\Cart\Cart;
     if(isset($_POST['id']) && isset($_POST['quantity'])){
         $index = $_POST['id']; // id-ul produsului i
         $quantity = $_POST["quantity"]; //cantitatea din produsul i
-        $dbProducts = getProductsFromDB();
+        $dbProducts = $cart->getProductsFromDB($conn);
         $sum = 0;
         foreach($index as $key => $value){
             foreach($dbProducts as $products_value){

@@ -1,7 +1,6 @@
 <?php
 
 $config = require_once '../config.php';
-
 // TODO - work with the $_REQUEST and $_SESSION['cart'] and update accordingly
 
 session_start();

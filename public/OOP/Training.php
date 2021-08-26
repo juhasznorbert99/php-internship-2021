@@ -11,7 +11,7 @@ class Training
     /**  Overloading only used on this when accessed outside the class.  */
     private $hidden = 2;
 
-    public function __set($name, $value)
+    public function __set($name, int $value)
     {
         echo "Setting '$name' to '$value'\n";
         $this->data[$name] = $value;
@@ -43,6 +43,15 @@ class Training
     {
         echo "Unsetting '$name'\n";
         unset($this->data[$name]);
+    }
+    public function __sleep()
+    {
+        return array("data");
+    }
+    public function __wakeup()
+    {
+        // TODO: Implement __wakeup() method.
+        echo "WAKE UP";
     }
 
     /**  Not a magic method, just here for example.  */
