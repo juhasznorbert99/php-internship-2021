@@ -10,8 +10,13 @@ class ExceptionHandler
         $this->render($e);
     }
 
+    /**
+     * @param \Exception $e
+     */
     protected function report($e)
     {
+        $e->getMessage();
+
         //TODO - log this exception
         echo "reporting the exception\n";
     }

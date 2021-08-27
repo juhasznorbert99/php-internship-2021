@@ -36,6 +36,11 @@ class Application
         $uri = $request->getServerParams()['REQUEST_URI'];
         $method = $request->getServerParams()['REQUEST_METHOD'];
 
+        //1 sa fie ajax request
+        //daca e ajax request si content type nu e cel specificat
+        echo json_encode(array('message' => '', 'code' => 415));
+        die();
+
         $hiddenMethod = isset($request->getParameters()['_method']) ? $request->getParameters()['_method'] : null;
 
         if ($hiddenMethod && strtolower($method) === 'post') {
