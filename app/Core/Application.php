@@ -7,6 +7,7 @@ class Application
     protected $router;
     protected $config;
     protected $sessionHandler;
+    protected $exceptionHandler;
 
     public function __construct()
     {
@@ -17,8 +18,8 @@ class Application
 
     private function setExceptionHandler()
     {
-        $exceptionHandler = new ExceptionHandler();
-        @set_exception_handler(array($exceptionHandler, 'handle'));
+        $this->exceptionHandler =  new ExceptionHandler();
+        @set_exception_handler(array($this->exceptionHandler, 'handle'));
     }
 
     private function loadRoutes()
@@ -38,8 +39,17 @@ class Application
 
         //1 sa fie ajax request
         //daca e ajax request si content type nu e cel specificat
-        echo json_encode(array('message' => '', 'code' => 415));
-        die();
+        //echo json_encode(array('message' => '', 'code' => 415));
+
+        //echo "<pre>";
+        //var_dump($request);
+
+        if($request->ajaxRequest()){
+            if($request->getHeaders()['CONTENT_TYPE'] != 'application/json'){
+                echo json_encode(array('message' => '', 'code' => 415));
+                die;
+            }
+        }
 
         $hiddenMethod = isset($request->getParameters()['_method']) ? $request->getParameters()['_method'] : null;
 

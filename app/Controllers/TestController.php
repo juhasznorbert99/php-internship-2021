@@ -5,6 +5,8 @@ namespace App\Controllers;
 class TestController extends BaseController
 {
 
+    protected $ana;
+
     public function getProductsFromDB(){
         $config = require_once '../database-config.php';
         $conn = mysqli_connect('localhost', $config['database'][0], $config['database'][1],

@@ -11,10 +11,14 @@ $(".add-cart-button").click(function (event) {
         url: "add-product.php",
         type: "GET",
         data: {"id": event.target.id},
-        datatype: "json",
+        datatype: "application/json",
         success: function (data) {
             //console.log(JSON.parse(data));
             location.reload();
+        },
+        fail: function (data) {
+            var returnedArray = data;
+            console.log(returnedArray['code']);
         }
     });
 });
@@ -67,7 +71,7 @@ $("#buy").click(function (event) {
     // console.log(indexes);
     // console.log(quantities);
     // console.log(email);
-    if (isEmail(email)) {
+    //if (isEmail(email)) {
         $.ajax({
             url: "/submit-cart.php",
             type: "POST",
@@ -80,13 +84,17 @@ $("#buy").click(function (event) {
             success: function (data) {
                 //return false;
                 //location.reload();
-                window.location.replace("http://norbi.local/test-controller");
+                console.log(data);
+                console.log(data.length);
+                if(data.length===4)
+                    window.location.replace("http://norbi.local/test-controller");
             },
-            error: function (data) {
-
+            fail: function (data) {
+                var returnedArray = data;
+                console.log(returnedArray['code']);
             }
         });
-    }
+    //}
     return false;
 });
 

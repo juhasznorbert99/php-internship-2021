@@ -31,6 +31,13 @@ class Request
         $this->serverParams = $_SERVER;
     }
 
+    public function ajaxRequest(){
+        if (isset($this->headers['X-REQUESTED-WITH']) && $this->headers['X-REQUESTED-WITH'] === 'XMLHttpRequest') {
+            return true;
+        }
+        return false;
+    }
+
     public function needsJson()
     {
         if (isset($this->headers['X-REQUESTED-WITH']) && $this->headers['X-REQUESTED-WITH'] === 'XMLHttpRequest') {

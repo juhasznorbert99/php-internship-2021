@@ -148,32 +148,43 @@
         }
     }
 
-    if(isset($_POST['id']) && isset($_POST['quantity'])){
-        $index = $_POST['id']; // id-ul produsului i
-        $quantity = $_POST["quantity"]; //cantitatea din produsul i
-        $dbProducts = $cart->getProductsFromDB($conn);
-        $sum = 0;
-        foreach($index as $key => $value){
-            foreach($dbProducts as $products_value){
-                if($value == $products_value['id']){
-                    $sum+=(int)$products_value['price']*(int)$quantity[$key];
+    $validation = new \App\Core\Validation();
+
+
+    $returnedErrors = $validation->check(["empty","valid"],['email' => $_POST['email']],["Email Required","Invalid Email"]);
+
+
+    if(count($returnedErrors)==0){
+        if(isset($_POST['id']) && isset($_POST['quantity'])){
+            $index = $_POST['id']; // id-ul produsului i
+            $quantity = $_POST["quantity"]; //cantitatea din produsul i
+            $dbProducts = $cart->getProductsFromDB($conn);
+            $sum = 0;
+            foreach($index as $key => $value){
+                foreach($dbProducts as $products_value){
+                    if($value == $products_value['id']){
+                        $sum+=(int)$products_value['price']*(int)$quantity[$key];
+                    }
                 }
             }
+
+
+            insertIntoOrders();
+            $id = lastOrderID();
+            $prices = findPricesByID($index);
+            insertIntoOrderItems($index,$prices,$quantity,$id);
+            mysqli_close($conn);
+
+
+            if(!isset($_SESSION))
+                session_start();
+            unset($_SESSION['cart']);
+            $_SESSION['sum'] = $sum;
         }
-
-
-        insertIntoOrders();
-        $id = lastOrderID();
-        $prices = findPricesByID($index);
-        insertIntoOrderItems($index,$prices,$quantity,$id);
-        mysqli_close($conn);
-
-
-        if(!isset($_SESSION))
-            session_start();
-        unset($_SESSION['cart']);
-        $_SESSION['sum'] = $sum;
     }
+
+    echo json_encode($returnedErrors);
+
     //echo($config['url'].'test-controller');
     //header('Location: '.$config['url'].'test-controller');
     exit();
