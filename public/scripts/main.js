@@ -108,3 +108,7 @@ $("#select-login").click(function () {
 $("#select-register").click(function () {
     location.href = 'http://norbi.local/test-controller/register';
 });
+
+$(document).ready( function () {
+    $('#table_id').DataTable();
+} );

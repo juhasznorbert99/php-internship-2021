@@ -108,4 +108,8 @@ class TestController extends BaseController
         $data = ['token'=>$token];
         $this->bladeResponse($data, 'products/confirm');
     }
+    public function orders(){
+        $data = [];
+        $this->bladeResponse($data, 'products/orders');
+    }
 }

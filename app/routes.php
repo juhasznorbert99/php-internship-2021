@@ -21,4 +21,14 @@ $router->get('/test-controller/register', 'TestController@register');
 
 $router->get('/test-controller/confirm', 'TestController@confirm');
 
+$router->get('/test-controller/orders', 'TestController@orders');
+
+$router->get('/test-controller/categories', 'CategoriesController@index');
+
+$router->get('/test-controller/categories/{id}/create', 'CategoriesController@create');
+
+$router->get('/test-controller/categories/{id}', 'CategoriesController@delete');
+
+
+
 return $router;

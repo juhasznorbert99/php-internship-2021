@@ -27,7 +27,9 @@
     "php": ">=7.2",
     "jenssegers/blade": "^1.2",
     "swiftmailer/swiftmailer": "^6.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ozdemir/datatables": "^2.3",
+    "datatables.net/editor-php": "2.*"
   },
   "autoload": {
     "psr-4": {
